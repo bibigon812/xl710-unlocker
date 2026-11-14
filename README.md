@@ -1,18 +1,27 @@
 # xl710_unlock
+This program unlocks Intel XL710 NICs.
 
-This program unlocks intel xl710 NICs.
+## Installation
+gcc -O2 xl710_unlock.c -o xl710_unlock
 
 ## Usage
 
 ```shell
-# ./xl710_unlock -n enp4s0f0
-EMP SR offset: 0x67a8
-PHY offset: 0x68f6
-PHY data struct size: 0x000c
-MISC: 0x6b0c <- locked
-MISC: 0x6b0c <- locked
-MISC: 0x6b0c <- locked
-MISC: 0x6b0c <- locked
-Ready to fix it? [y/N]: y
-```
+# ./xl710_unlock enp2s0f0np0
+EMP SR offset: 0x686e
+PHY offset: 0x69be
+PHY struct size: 0x000d
 
+=== Inspecting Structure States ===
+Struct 0 (word 0x69c6 / byte 0xd38c): 0x630c <- unlocked
+Struct 1 (word 0x69d4 / byte 0xd3a8): 0x630c <- unlocked
+Struct 2 (word 0x69e2 / byte 0xd3c4): 0x630c <- unlocked
+Struct 3 (word 0x69f0 / byte 0xd3e0): 0x630c <- unlocked
+
+=== Unlocking Physical Ports (Structs 0 & 1 -> 0x630c) ===
+Struct 0 (byte 0xd38c) written to 0x630c [OK]
+Struct 1 (byte 0xd3a8) written to 0x630c [OK]
+
+=== Recalculating NVM Checksum ===
+NVM Checksum updated successfully.
+```
